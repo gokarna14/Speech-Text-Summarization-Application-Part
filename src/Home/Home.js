@@ -21,6 +21,8 @@ const Home = () => {
     const [showSettings, setShowSettings] = useState(false);
     const [rangeValue, setRangeValue] = useState(2)
 
+    const [significantWords, setSignificantWords] = useState([])
+
     const [summary, setSummary] = useState("")
 
 
@@ -112,11 +114,13 @@ const Home = () => {
             .then(json => {
                 // setTextId(json["MAX(text_id)"]);
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                return json["summary"]["summary"]
+                return json["summary"]
             })
-
+        
+        console.log(summary_);
 
         setSummary(summary_);
+        setSignificantWords(summary_["significant_words"]);
 
         // post summary
         await fetch(
@@ -203,11 +207,12 @@ const Home = () => {
 
                                     onChange={(e) => {
                                         setText(e.target.value);
+                                        console.log("Changed");
                                         setSummary("");
                                     }}
                                 />
                             </div>
-                            <div className="row mx-auto p-2">
+                            <div className="row mx-auto pt-4">
                                 <div className="col btn btn-warning"
                                     onClick={() => {summarizationClicked()}}
                                 >
@@ -239,9 +244,9 @@ const Home = () => {
                             </div>
 
                             <div className="input-group input-group-lg">
-                                <textarea type="text" className="form-control border rounded border-success" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                <textarea type="text" className="bg-light form-control border rounded border-success text-black" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                     placeholder='Your summary will appear here ...'
-                                    value={summary === "" || text == "" ? "" : summary}
+                                    value={summary["summary"] === "" || text == "" ? "" : summary["summary"]}
                                     disabled
                                     rows="12"
                                     cols="50"
@@ -251,6 +256,23 @@ const Home = () => {
                                         // TODO
                                     }}
                                 />
+                            </div>
+                            <div>
+                                <b>Significant words</b>
+                            </div>
+                            <div className='pt-2'>
+                                    <textarea type="text" className="form-control border rounded border-success font-monospace text-primary" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                        placeholder='Significant words will appear here ...'
+                                        value={summary === "" || text == "" ? "" : `${summary["significant_words"].join(", ")}`}
+                                        disabled
+                                        rows="2"
+                                        cols="50"
+                                        // value={"Your text to summarize here ... "}
+
+                                        onChange={(e) => {
+                                            // TODO
+                                        }}
+                                    />
                             </div>
                         </div>
                     </div>
