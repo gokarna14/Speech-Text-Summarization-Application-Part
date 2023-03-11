@@ -28,14 +28,14 @@ const Home = ()=>{
 
 
     const developers = {
-    'Home': <div className='niceCenter'>
-        <dir className='Home'>
+    'Home': <div className='niceCenter  px-5'>
+        <dir className='Home  px-5'>
             <h2>About Us</h2>
             <p>We are undergrad students, currently a year III student under the program BE in Electronics, Communication and Information at IOE, Pulchowk.</p>
         </dir>
         
     </div>,
-    'devs': <div className='niceCenter'>
+    'devs': <div className='niceCenter px-5'>
          <table className='table' style={{
              color: 'white'
          }}>
@@ -79,14 +79,16 @@ const Home = ()=>{
 
     const sa ={
         'left':<>
+        <div className="px-5">
             {saGif}
+        </div>
         </>,
-        'right':<div className=''>
+        'right':<div className='px-5'>
         <dir style={{
             textAlign: 'right'
         }}>
             <h2>Summary Generation</h2>
-            <p>We can analyze the sentiment of a english text with more than 90% accuracy !</p>
+            <p>We can generate the summary of an english text !</p>
         </dir>
         
     </div>
@@ -100,7 +102,7 @@ const Home = ()=>{
         <dir style={{
             textAlign: 'left'
         }}>
-            <h2>Personality Prediction</h2>
+            <h2>Keywords Detection</h2>
             <p>We can predict human personality that is true for Quarter of the world population based on more than 70 thousands data !</p>
         </dir>
         

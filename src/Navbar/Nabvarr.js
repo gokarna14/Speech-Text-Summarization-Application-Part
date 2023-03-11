@@ -1,14 +1,18 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import TextAnimation from "../Animations/TextAnimation";
+import { logo } from "../db/img";
+
 
 
 const Navbarr = () => {
     return (
         <div className="border">
-            <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+            <nav className="navbar navbar-expand-lg navbar-light bg-dark">
                 <div className="container-fluid">
-                    <Link to={"/"} className="navbar-brand" href="#"><img src="https://play-lh.googleusercontent.com/K_jClVy1xNk4gSFa0qteJwYtbKIIKb8XI580h92KehKbixj05QB0-V53fkiJrFpwYQ" alt="" width={100} /></Link>
+                    <Link to={"/"} className="navbar-brand" href="#">
+                        {logo} 
+                    </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
