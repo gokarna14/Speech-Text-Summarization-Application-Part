@@ -3,14 +3,16 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { settings } from "../icons"
 
-const Index =()=>{
+const Index = () => {
 
     const sizes = ["Small", "Medium", "Large"];
-    
+
     const sizesToSendToApi = [0.1, 0.5, 0.8]
-    
+
 
     const [text, setText] = useState('')
+    const [summaryToDisplay, setSummaryToDisplay] = useState('')
+    const [summaryToDisplayArray, setSummaryToDisplayArray] = useState('')
     const [data, setData] = useState(null);
     const [textId, setTextId] = useState(0)
     const [selectedSize, setSelectedSize] = useState('M');
@@ -112,11 +114,18 @@ const Index =()=>{
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
                 return json["summary"]
             })
-        
+
         console.log(summary_);
 
         setSummary(summary_);
         setSignificantWords(summary_["significant_words"]);
+
+        setSummaryToDisplay(summary_["summary"]);
+        setSummaryToDisplayArray(summary_["summary"].split(''));
+
+        
+        console.log(summary_["summary"].split(''));
+        console.log("HEREE");
 
         // post summary
         await fetch(
@@ -187,79 +196,78 @@ const Index =()=>{
         }
     }
 
-    return(
+    return (
         <div>
-        <div class="p-3 mb-2">
-            <div className="container">
-                <div className="row">
-                    <div className="col-6 my-2 p-2">
-                        <div className="input-group input-group-lg">
-                            <textarea type="text" className="form-control border rounded border-primary" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                placeholder='Type your text here ...'
-                                rows="15"
-                                cols="50"
-                                value={text}
+            <div class="p-3 mb-2 bg-dark text-bg-danger">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-6 my-2 p-2">
+                            <div className="input-group input-group-lg border">
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    placeholder='Type your text here ...'
+                                    rows="15"
+                                    cols="50"
+                                    value={text}
 
-                                onChange={(e) => {
-                                    setText(e.target.value);
-                                    console.log("Changed");
-                                    setSummary("");
-                                }}
-                            />
-                        </div>
-                        <div className="row mx-auto pt-4">
-                            <div className="col btn btn-warning"
-                                onClick={() => {summarizationClicked()}}
-                            >
-                                {settings} Summarize {settings}
+                                    onChange={(e) => {
+                                        setText(e.target.value);
+                                        console.log("Changed");
+                                        setSummary("");
+                                    }}
+                                />
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-6 my-2 p-2">
-                        <div>
-                            <div className="container" style={{ fontSize: '20px' }}>
-                                <div className="row">
-                                    <div className="float-start col">
-                                        <span className='float-start'>Small</span>
-                                    </div>
-                                    <div className="col center text-center">
-                                        <span>Medium</span>
-                                    </div>
-                                    <div className="col">
-                                        <span className='float-end'>Large</span>
-                                    </div>
-                                </div>
-                                <div className="row p-1">
-                                    <input type="range" class="form-range" id="customRange1" min={0} max={2} step={1} onChange={(e) => { 
-                                        setRangeValue(parseInt(e.target.value));
-                                     }} />
-                                     {/* {rangeValue} */}
+                            <div className="row mx-auto pt-5">
+                                <div className="col btn btn-warning"
+                                    onClick={() => { summarizationClicked() }}
+                                >
+                                    {settings} Summarize {settings}
                                 </div>
                             </div>
                         </div>
+                        <div className="col-6 my-2 p-2">
+                            <div>
+                                <div className="container" style={{ fontSize: '20px' }}>
+                                    <div className="row">
+                                        <div className="float-start col">
+                                            <span className='float-start'>Small</span>
+                                        </div>
+                                        <div className="col center text-center">
+                                            <span>Medium</span>
+                                        </div>
+                                        <div className="col">
+                                            <span className='float-end'>Large</span>
+                                        </div>
+                                    </div>
+                                    <span className="row p-1 text-light m-3 bg-warning">
+                                        <input type="range" className="" id="customRange1" min={0} max={2} step={1} onChange={(e) => {
+                                            setRangeValue(parseInt(e.target.value));
+                                        }} />
+                                        {/* {rangeValue} */}
+                                    </span>
+                                </div>
+                            </div>
 
-                        <div className="input-group input-group-lg">
-                            <textarea type="text" className="bg-light form-control border rounded border-success text-black" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                placeholder='Your summary will appear here ...'
-                                value={summary["summary"] === "" || text == "" ? "" : summary["summary"]}
-                                disabled
-                                rows="12"
-                                cols="50"
-                                // value={"Your text to summarize here ... "}
+                            <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    placeholder='Your summary will appear here ...'
+                                    value={(summary === "" || text == "") ? ""  : summaryToDisplay}
+                                    // disabled
+                                    rows="12"
+                                    cols="50"
 
-                                onChange={(e) => {
-                                    // TODO
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <b>Significant words</b>
-                        </div>
-                        <div className='pt-2'>
-                                <textarea type="text" className="form-control border rounded border-success font-monospace text-primary" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    onChange={(e) => {
+                                        // TODO
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <br />
+                            </div>
+                            <div className='pt-2'>
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                     placeholder='Significant words will appear here ...'
-                                    value={summary === "" || text == "" ? "" : `${summary["significant_words"].join(", ")}`}
-                                    disabled
+                                    value={(summary === "" || text == "") ? "" : `${summary["significant_words"].join(", ")}`}
+                                    // disabled
                                     rows="2"
                                     cols="50"
                                     // value={"Your text to summarize here ... "}
@@ -268,13 +276,22 @@ const Index =()=>{
                                         // TODO
                                     }}
                                 />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     )
 }
 
 export default Index;
+
+
+
+
+// In Sanskrit, Maha means great or big, and Shivaratri means a night dedicated to Shiva. According to the Rudra Samhita, the wedding of Shiva and Parvati took place in the Himalayas. On that day, Parvati transformed herself into Chandraghanta with golden skin and ten arms, and they got married in their beautiful divine forms at Triyuginarayan village in Rudraprayag, India. So, their marriage is celebrated as Mahashivaratri every year.
+
+// Mahashivaratri is an important festival that is widely celebrated in both Nepal and India, though with different perspectives and processes. Some fast for the entire day of Mahashivaratri and perform vedic or tantric worship of Shiva, while others practise meditative yoga. People also perform the Rudra Abhishek in the day of Mahashivaratri, a special type of puja to please Lord Shiva and seek his blessings. The rituals are carried out throughout the day or in different muhurtas (ancient measurement units for time). Though the daytime of the Mahashivaratri rituals differ, at night people generally stay awake doing bhajan, kirtans, meditation, sadhana, upasana, etc.
+
+// Mahashivaratri is a magnificent occasion for the followers of Lord Shiva to praise him and seek his blessings. In fact, for devotees of Lord Shiva, nothing is more important than fasting on this day,” said Narayan Bhatt, a priest at Pashupatinath Temple. A common ritual a lot of people follow is to take a bath in a river early in the morning or in warm water with sesame seeds at their homes in order to clean themselves. “Devotees can fast for 24 hours in the day of Mahashivaratri without eating or drinking, but they can also fast by drinking water and eating sattvic food (unprocessed food with yogic qualities to increase energy),” added the priest.
