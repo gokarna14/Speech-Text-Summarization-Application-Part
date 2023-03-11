@@ -3,75 +3,34 @@ import './App.css';
 import Home from './Home/Home';
 import AnimatedText from 'react-animated-text-content';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Index from './Summarization/Index';
+import Navbarr from './Navbar/Nabvarr';
+import AboutUs from './AboutUs/AboutUs';
+import TextAnimation from './Animations/TextAnimation';
 
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 
 function App() {
   return (
-    <header classNameName="App-header">
-      <div className="container p-3">
-        <div className="row text-center">
-          <hr />
-          <h1>
-            <AnimatedText
-              type="words" // animate words or chars
-              animation={{
-                x: '200px',
-                y: '-20px',
-                scale: 1.1,
-                ease: 'ease-in-out',
-              }}
-              animationType="wave"
-              interval={0.06}
-              duration={1}
-              tag="p"
-              className="animated-paragraph"
-              includeWhiteSpaces
-              threshold={0.1}
-              rootMargin="20%"
-            >
-              Welcome to Speech Text Summarization !
-            </AnimatedText>
-          </h1>
-          <hr />
+    <div classNameName="font-monospace">
+      <BrowserRouter>
+        <Navbarr></Navbarr>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/Summary" element={<Index />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+        </Routes>
+      </BrowserRouter>
 
-        </div>
-        <div className="row">
-          <div className="col-1 border border-1 border-danger">
-          </div>
-          <div className="col">
-            <Home></Home>
-          </div>
-          <div className="col-1 border border-1 border-danger">
-          </div>
-        </div>
-              <hr />
-        <div className="row text-center">
-          <AnimatedText
-            type="words" // animate words or chars
-            animation={{
-              x: '200px',
-              y: '-20px',
-              scale: 1.1,
-              ease: 'ease-in-out',
-            }}
-            animationType="wave"
-            interval={0.06}
-            duration={1}
-            tag="p"
-            className="animated-paragraph"
-            includeWhiteSpaces
-            threshold={0.1}
-            rootMargin="20%"
-          >
-               © Speech Text Summarization, 2023
-          </AnimatedText> 
-        </div>
-      </div>
-    </header>
+      <br /><br /><br /><br />
+      <TextAnimation
+          text={"© Automatic Text Summarization, 2023"}
+          textTag = "h7"
+        ></TextAnimation>
+    </div>
   );
 }
 

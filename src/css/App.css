@@ -1,0 +1,152 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.left{
+  position: sticky;
+  float: left;
+  padding-left: 1%;
+}
+
+.leftAbs{
+  position: sticky;
+  float:inherit;
+  padding-left: 2%;
+}
+
+.right{
+  float: right;
+  border-left: #61dafb;
+  padding-right: 2%;
+}
+
+.topRight{
+  position:absolute;
+   top:0;
+   right:0;
+   border-left: #61dafb;
+   padding-right: 2%;
+}
+.topRightFixed{
+  position:fixed;
+   top:12%;
+   right:2%;
+   border-left: #61dafb;
+   padding-right: 2%;
+}
+
+.topLeftFixed{
+  position:fixed;
+   top:20%;
+   left:2%;
+   border-left: #61dafb;
+   padding-right: 2%;
+}
+
+.niceCenter{
+  padding: 0 15% 0 15%;
+}
+
+.niceCenterR{
+  padding: 0 0 0 30%;
+}
+.niceCenterL{
+  padding: 0 40% 0 0;
+}
+
+.extraCenter{
+  padding: 0 20% 0 20%;
+}
+
+.spaceDown{
+  padding-bottom: 1%;
+}
+
+.alignLeft{
+  text-align: left;
+}
+
+#open{
+  padding: 2% 0% 0% 2%;
+}
+
+.fixedRightM{
+  position:fixed;
+  top:50%;
+  width:10%;
+  z-index:100;
+}
+
+.fixedRightPie{
+    position:fixed;
+}
+
+.navbarPGA{
+  position: fixed; /* <-- Look here */
+  right: 0;
+  left: 0;
+  z-index: 0;
+  background-color:wheat;
+}
+
+.sideBySide1{
+  width: 600px; 
+  display: table-cell;
+}
+.sideBySide2{
+  display: table-cell;
+}
+
+.h1{
+  display: table;
+  font-size: medium;
+}
+
+.h2{
+  display: table-row;
+}
+
+.sideBySide1F{
+  width: 600px; 
+  display: table-cell;
+}
+.sideBySide2F{
+  display: table-cell;
+}
+
+.h1F{
+  display: table;
+}
+
+.h2F{
+  display: table-row;
+}

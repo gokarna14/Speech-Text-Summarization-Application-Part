@@ -13,6 +13,7 @@
         "react": "^18.2.0",
         "react-animated-text-content": "^1.0.1",
         "react-dom": "^18.2.0",
+        "react-parallax": "^3.5.1",
         "react-scripts": "5.0.1",
         "sweetalert": "^2.1.2",
         "sweetalert2": "^11.7.0",
@@ -41,5 +42,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "react-router-dom": "^6.9.0"
     }
 }
