@@ -1,9 +1,10 @@
 import React from "react";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { settings } from "../icons"
 
 const Index = () => {
+
 
     const sizes = ["Small", "Medium", "Large"];
 
@@ -11,6 +12,7 @@ const Index = () => {
 
 
     const [text, setText] = useState('')
+    const [count, setCount] = useState(0)
     const [summaryToDisplay, setSummaryToDisplay] = useState('')
     const [summaryToDisplayArray, setSummaryToDisplayArray] = useState('')
     const [data, setData] = useState(null);
@@ -22,6 +24,22 @@ const Index = () => {
     const [significantWords, setSignificantWords] = useState([])
 
     const [summary, setSummary] = useState("")
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (summary === "" || text === "" || count >= summaryToDisplayArray.length) {
+                // console.log("Nothing needs to be happen");
+                // setSummaryToDisplay("");
+                setCount(0);
+
+            }
+            else {
+                setSummaryToDisplay(`${summaryToDisplay}${summaryToDisplayArray[count]}`);
+                setCount(count + 1);
+            }
+        }, 20);
+        return () => clearInterval(interval);
+    }, [text, summary, summaryToDisplay, summaryToDisplayArray]);
 
 
     async function getData(url, setFunction, method = "GET", body = null) {
@@ -120,10 +138,10 @@ const Index = () => {
         setSummary(summary_);
         setSignificantWords(summary_["significant_words"]);
 
-        setSummaryToDisplay(summary_["summary"]);
+        // setSummaryToDisplay(summary_["summary"]);
         setSummaryToDisplayArray(summary_["summary"].split(''));
 
-        
+
         console.log(summary_["summary"].split(''));
         console.log("HEREE");
 
@@ -211,8 +229,9 @@ const Index = () => {
 
                                     onChange={(e) => {
                                         setText(e.target.value);
-                                        console.log("Changed");
+                                        // console.log("Changed");
                                         setSummary("");
+                                        setSummaryToDisplay("");
                                     }}
                                 />
                             </div>
@@ -241,6 +260,8 @@ const Index = () => {
                                     <span className="row p-1 text-light m-3 bg-warning">
                                         <input type="range" className="" id="customRange1" min={0} max={2} step={1} onChange={(e) => {
                                             setRangeValue(parseInt(e.target.value));
+                                            setSummary("");
+                                            setSummaryToDisplay("");
                                         }} />
                                         {/* {rangeValue} */}
                                     </span>
@@ -250,7 +271,7 @@ const Index = () => {
                             <div className="input-group input-group-lg rounded border border-4 border-success border-2">
                                 <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                     placeholder='Your summary will appear here ...'
-                                    value={(summary === "" || text == "") ? ""  : summaryToDisplay}
+                                    value={(summary === "" || text == "") ? "" : summaryToDisplay}
                                     // disabled
                                     rows="12"
                                     cols="50"
