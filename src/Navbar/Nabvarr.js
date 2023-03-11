@@ -8,7 +8,7 @@ import { logo } from "../db/img";
 const Navbarr = () => {
     return (
         <div className="border">
-            <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-light bg-dark font-monospace text-light">
                 <div className="container-fluid">
                     <Link to={"/"} className="navbar-brand" href="#">
                         {logo} 
@@ -18,15 +18,15 @@ const Navbarr = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
+                            <li className="btn btn-light mx-1">
                                 <Link to={"/"} className="btn" aria-current="page" href="#">Home</Link>
                             </li>
-                            <li className="nav-item">
+                            <li className="btn btn-light mx-1">
                                 <Link to={"/Summary"} className="btn" href="#">Generate Summary</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="btn btn-light mx-1">
                                 <Link to={"/AboutUs"} className="btn" href="#">About Us</Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <TextAnimation
                                     text={"Welcome to Automatic Text Summarization !"}
@@ -35,7 +35,7 @@ const Navbarr = () => {
                                 ></TextAnimation>
                             </li>
 
-                            {/* <li className="nav-item">
+                            {/* <li className="btn btn-light">
                                 <a className="btn" href="#" tabindex="-1" aria-disabled="true">
                                     <b>Text Summarization Using LSA with Transformers</b>
                                 </a>
