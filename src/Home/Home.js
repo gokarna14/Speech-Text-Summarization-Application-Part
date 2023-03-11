@@ -154,7 +154,7 @@ const Home = ()=>{
                 </div>
                 {spacing}
             </Parallax>
-
+                        
            <Parallel
                 text={'The Project'}
                 r= {210}

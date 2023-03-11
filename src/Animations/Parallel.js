@@ -3,11 +3,11 @@ import { Parallax } from "react-parallax";
 import { spacing } from "../db/usefuls";
 
 
-const Parallel =(props)=>{
+const Parallel = (props) => {
 
-    return(
+    return (
         <>
-             <Parallax 
+            <Parallax
                 renderLayer={percentage => (
                     <div
                         style={{
@@ -16,17 +16,18 @@ const Parallel =(props)=>{
                             left: '0%',
                             top: '0%',
                             bottom: '0%',
-                            width: (props.width == undefined ? percentage*window.scrollY*2 : window.innerWidth - percentage*window.scrollY*2),
-                            height: percentage*1000,
+                            width: (props.width == undefined ? percentage * window.scrollY * 2 : window.innerWidth - percentage * window.scrollY * 2),
+                            height: percentage * 1000,
                         }}
                     />
                 )}
-                >
-                    <br /><br />
-                    <h1 style={{
-                        color:'white'
+            >
+                <br /><br />
+                <h1 className="px-5"
+                    style={{
+                        color: 'white'
                     }}>{props.text}</h1>
-                    {spacing}
+                {spacing}
             </Parallax>
         </>
     )

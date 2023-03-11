@@ -15,6 +15,7 @@ const Index = () => {
     const [count, setCount] = useState(0)
     const [summaryToDisplay, setSummaryToDisplay] = useState('')
     const [summaryToDisplayArray, setSummaryToDisplayArray] = useState('')
+    const [summaryAbsToDisplayArray, setSummaryAbsToDisplayArray] = useState('')
     const [data, setData] = useState(null);
     const [textId, setTextId] = useState(0)
     const [selectedSize, setSelectedSize] = useState('M');
@@ -24,6 +25,7 @@ const Index = () => {
     const [significantWords, setSignificantWords] = useState([])
 
     const [summary, setSummary] = useState("")
+    const [summaryAbs, setSummaryAbs] = useState("")
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -132,18 +134,42 @@ const Index = () => {
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
                 return json["summary"]
             })
+        let summary_abs = await fetch(
+            "http://127.0.0.1:5000/generateAbs_summary",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "text": text,
+                    "compression_ratio": sizesToSendToApi[rangeValue]
+                })
+            }
+        )
+            .then(response => response.json())
+            .then(json => {
+                // setTextId(json["MAX(text_id)"]);
+                // new Promise(()=>setTextId(json["MAX(text_id)"]))
+                return json["summary"]
+            })
 
-        console.log(summary_);
+
 
         setSummary(summary_);
+        setSummaryAbs(summary_abs);
+
+
         setSignificantWords(summary_["significant_words"]);
 
         // setSummaryToDisplay(summary_["summary"]);
         setSummaryToDisplayArray(summary_["summary"].split(''));
 
 
-        console.log(summary_["summary"].split(''));
-        console.log("HEREE");
+        setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
+
+
+        // console.log(summary_["summary"].split(''));
 
         // post summary
         await fetch(
@@ -232,6 +258,7 @@ const Index = () => {
                                         // console.log("Changed");
                                         setSummary("");
                                         setSummaryToDisplay("");
+                                        setSummaryAbs("");
                                     }}
                                 />
                             </div>
@@ -261,6 +288,7 @@ const Index = () => {
                                         <input type="range" className="" id="customRange1" min={0} max={2} step={1} onChange={(e) => {
                                             setRangeValue(parseInt(e.target.value));
                                             setSummary("");
+                                            setSummaryAbs("");
                                             setSummaryToDisplay("");
                                         }} />
                                         {/* {rangeValue} */}
@@ -270,7 +298,7 @@ const Index = () => {
 
                             <div className="input-group input-group-lg rounded border border-4 border-success border-2">
                                 <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                    placeholder='Your summary will appear here ...'
+                                    placeholder='Your extractive summary will appear here ...'
                                     value={(summary === "" || text == "") ? "" : summaryToDisplay}
                                     // disabled
                                     rows="12"
@@ -299,6 +327,21 @@ const Index = () => {
                                 />
                             </div>
                         </div>
+                    </div>
+                    <div className="row">
+                    <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    placeholder='Your abstractive summary will appear here ...'
+                                    value={(summary === "" || text == "") ? "" : summaryAbs}
+                                    // disabled
+                                    rows="12"
+                                    cols="50"
+
+                                    onChange={(e) => {
+                                        // TODO
+                                    }}
+                                />
+                            </div>
                     </div>
                 </div>
             </div>
