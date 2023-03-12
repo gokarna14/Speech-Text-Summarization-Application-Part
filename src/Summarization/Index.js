@@ -329,8 +329,8 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="row">
-                        {(summary === "" || text == "") ? <></> : <div class="spinner-border text-light" role="status">
-                            <span class="sr-only">Loading...</span>
+                        {((summary === "" || text == "") && summaryAbs === "") ? <></> : <div class="spinner-border text-light" role="status">
+                            <span class="sr-only"></span>
                         </div>}
                         <div className="input-group input-group-lg rounded border border-4 border-success border-2">
                             <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
