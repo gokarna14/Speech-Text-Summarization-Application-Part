@@ -176,7 +176,7 @@ const Index = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "text": text,
+                    "text": summary_,
                     "compression_ratio": sizesToSendToApi[rangeValue]
                 })
             }
