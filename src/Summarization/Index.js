@@ -192,7 +192,9 @@ const Index = () => {
                 console.log(json);
                 return json
             })
-            setSummaryAbs(summary_abs["abs_summ"]);
+
+            setSummaryAbs(summary_abs["summary"]["abs_summ"]);
+            
 
 
 
