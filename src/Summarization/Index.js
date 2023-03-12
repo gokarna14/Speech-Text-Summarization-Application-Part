@@ -176,7 +176,7 @@ const Index = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "text": summary_,
+                    "text": text,
                     "compression_ratio": sizesToSendToApi[rangeValue]
                 })
             }
@@ -188,6 +188,9 @@ const Index = () => {
                 return json["summary"]
             })
         setSummaryAbs(summary_abs["abs_summ"]);
+
+        console.log("\n\n\n\nHEREEEE");
+        console.log(summary_abs);
 
 
     }
@@ -345,6 +348,7 @@ const Index = () => {
                                 }}
                             />
                         </div>
+                        {summaryAbs}
                     </div>
                 </div>
             </div>
