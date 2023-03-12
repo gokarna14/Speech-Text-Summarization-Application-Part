@@ -157,17 +157,16 @@ const Index = () => {
 
 
         setSummary(summary_);
-        setSummaryAbs(summary_abs);
-
-
+        
+        
         setSignificantWords(summary_["significant_words"]);
-
         // setSummaryToDisplay(summary_["summary"]);
         setSummaryToDisplayArray(summary_["summary"].split(''));
+        
 
-
-        setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
-
+        
+        // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
+        setSummaryAbs(summary_abs["abs_summ"]);
 
         // console.log(summary_["summary"].split(''));
 
