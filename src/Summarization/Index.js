@@ -137,21 +137,21 @@ const Index = () => {
                 // console.log(json);
                 return json
             })
-        
+
 
 
 
         setSummary(summary_["abs_summ"]);
-        
-        
+
+
         setSignificantWords(summary_["significant_words"]);
         // setSummaryToDisplay(summary_["summary"]);
         setSummaryToDisplayArray(summary_["summary"].split(''));
-        
 
-        
+
+
         // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
-        
+
 
         // console.log(summary_["summary"].split(''));
 
@@ -193,8 +193,8 @@ const Index = () => {
                 return json
             })
 
-            setSummaryAbs(summary_abs["summary"]["abs_summ"]);
-            
+        setSummaryAbs(summary_abs["summary"]["abs_summ"]);
+
 
 
 
@@ -337,19 +337,25 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="row">
-                    <div className="input-group input-group-lg rounded border border-4 border-success border-2">
-                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                    placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
-                                    value={(summary === "" || text == "") ? "" : summaryAbs}
-                                    // disabled
-                                    rows="12"
-                                    cols="50"
-
-                                    onChange={(e) => {
-                                        // TODO
-                                    }}
-                                />
+                        {((summary === "" || text === "") && summaryAbs === "") ? "" : (summaryAbs === "") ? <>
+                            <div class="spinner-border text-light" role="status">
+                                <span class="sr-only"></span>
                             </div>
+                        </> : ""
+                        }
+                        <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                            <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
+                                value={(summary === "" || text == "") ? "" : summaryAbs}
+                                // disabled
+                                rows="12"
+                                cols="50"
+
+                                onChange={(e) => {
+                                    // TODO
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
