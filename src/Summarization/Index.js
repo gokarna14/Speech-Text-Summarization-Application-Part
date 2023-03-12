@@ -137,6 +137,41 @@ const Index = () => {
                 // console.log(json);
                 return json
             })
+        
+
+
+
+        setSummary(summary_["abs_summ"]);
+        
+        
+        setSignificantWords(summary_["significant_words"]);
+        // setSummaryToDisplay(summary_["summary"]);
+        setSummaryToDisplayArray(summary_["summary"].split(''));
+        
+
+        
+        // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
+        
+
+        // console.log(summary_["summary"].split(''));
+
+        // post summary
+        // await fetch(
+        //     "http://127.0.0.1:5000/summary",
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+
+        //             "summary": summary_,
+        //             "compression_ratio": sizesToSendToApi[rangeValue],
+        //             "text_id": text_id
+        //         })
+        //     }
+        // )
+
         let summary_abs = await fetch(
             "http://127.0.0.1:5000/generateAbs_summary",
             {
@@ -157,39 +192,7 @@ const Index = () => {
                 console.log(json);
                 return json
             })
-
-
-
-        setSummary(summary_["abs_summ"]);
-        
-        
-        setSignificantWords(summary_["significant_words"]);
-        // setSummaryToDisplay(summary_["summary"]);
-        setSummaryToDisplayArray(summary_["summary"].split(''));
-        
-
-        
-        // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
-        setSummaryAbs(summary_abs["abs_summ"]);
-
-        // console.log(summary_["summary"].split(''));
-
-        // post summary
-        // await fetch(
-        //     "http://127.0.0.1:5000/summary",
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-
-        //             "summary": summary_,
-        //             "compression_ratio": sizesToSendToApi[rangeValue],
-        //             "text_id": text_id
-        //         })
-        //     }
-        // )
+            setSummaryAbs(summary_abs["abs_summ"]);
 
 
 
