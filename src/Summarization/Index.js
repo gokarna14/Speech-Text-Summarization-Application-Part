@@ -134,25 +134,7 @@ const Index = () => {
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
                 return json["summary"]
             })
-        let summary_abs = await fetch(
-            "http://127.0.0.1:5000/generateAbs_summary",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "text": text,
-                    "compression_ratio": sizesToSendToApi[rangeValue]
-                })
-            }
-        )
-            .then(response => response.json())
-            .then(json => {
-                // setTextId(json["MAX(text_id)"]);
-                // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                return json["summary"]
-            })
+        
 
 
 
@@ -166,7 +148,6 @@ const Index = () => {
 
         
         // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
-        setSummaryAbs(summary_abs["abs_summ"]);
 
         // console.log(summary_["summary"].split(''));
 
@@ -187,6 +168,26 @@ const Index = () => {
             }
         )
 
+            let summary_abs = await fetch(
+            "http://127.0.0.1:5000/generateAbs_summary",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "text": text,
+                    "compression_ratio": sizesToSendToApi[rangeValue]
+                })
+            }
+        )
+            .then(response => response.json())
+            .then(json => {
+                // setTextId(json["MAX(text_id)"]);
+                // new Promise(()=>setTextId(json["MAX(text_id)"]))
+                return json["summary"]
+            })
+        setSummaryAbs(summary_abs["abs_summ"]);
 
 
     }
