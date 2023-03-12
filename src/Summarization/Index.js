@@ -134,19 +134,19 @@ const Index = () => {
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
                 return json["summary"]
             })
-        
+
 
 
 
         setSummary(summary_);
-        
-        
+
+
         setSignificantWords(summary_["significant_words"]);
         // setSummaryToDisplay(summary_["summary"]);
         setSummaryToDisplayArray(summary_["summary"].split(''));
-        
 
-        
+
+
         // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
 
         // console.log(summary_["summary"].split(''));
@@ -168,7 +168,7 @@ const Index = () => {
             }
         )
 
-            let summary_abs = await fetch(
+        let summary_abs = await fetch(
             "http://127.0.0.1:5000/generateAbs_summary",
             {
                 method: "POST",
@@ -329,19 +329,22 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="row">
-                    <div className="input-group input-group-lg rounded border border-4 border-success border-2">
-                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                    placeholder='Your abstractive summary will appear here ...'
-                                    value={(summary === "" || text == "") ? "" : summaryAbs}
-                                    // disabled
-                                    rows="12"
-                                    cols="50"
+                        {(summary === "" || text == "") ? <></> : <div class="spinner-border text-light" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>}
+                        <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                            <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary... Hang on a second."}
+                                value={(summary === "" || text == "") ? "" : summaryAbs}
+                                // disabled
+                                rows="12"
+                                cols="50"
 
-                                    onChange={(e) => {
-                                        // TODO
-                                    }}
-                                />
-                            </div>
+                                onChange={(e) => {
+                                    // TODO
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
