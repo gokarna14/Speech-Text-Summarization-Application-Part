@@ -87,30 +87,32 @@ const Index = () => {
     async function generateSummary() {
 
         setText(text)
+        setSummary("")
+        setSummaryToDisplay("")
         // console.log(text);
 
         // post text
-        await fetch(
-            "http://127.0.0.1:5000/text",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "text": text
-                })
-            }
-        )
+        // await fetch(
+        //     "http://127.0.0.1:5000/text",
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             "text": text
+        //         })
+        //     }
+        // )
 
-        //Determining the latest text id
-        let text_id = await fetch("http://127.0.0.1:5000/text")
-            .then(response => response.json())
-            .then(json => {
-                // setTextId(json["MAX(text_id)"]);
-                // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                return json["MAX(text_id)"]
-            })
+        // //Determining the latest text id
+        // let text_id = await fetch("http://127.0.0.1:5000/text")
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         // setTextId(json["MAX(text_id)"]);
+        //         // new Promise(()=>setTextId(json["MAX(text_id)"]))
+        //         return json["MAX(text_id)"]
+        //     })
 
 
         // console.log(text_id);
@@ -132,42 +134,9 @@ const Index = () => {
             .then(json => {
                 // setTextId(json["MAX(text_id)"]);
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                return json["summary"]
+                // console.log(json);
+                return json
             })
-
-
-
-
-        setSummary(summary_);
-
-
-        setSignificantWords(summary_["significant_words"]);
-        // setSummaryToDisplay(summary_["summary"]);
-        setSummaryToDisplayArray(summary_["summary"].split(''));
-
-
-
-        // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
-
-        // console.log(summary_["summary"].split(''));
-
-        // post summary
-        await fetch(
-            "http://127.0.0.1:5000/summary",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-
-                    "summary": summary_,
-                    "compression_ratio": sizesToSendToApi[rangeValue],
-                    "text_id": text_id
-                })
-            }
-        )
-
         let summary_abs = await fetch(
             "http://127.0.0.1:5000/generateAbs_summary",
             {
@@ -185,12 +154,43 @@ const Index = () => {
             .then(json => {
                 // setTextId(json["MAX(text_id)"]);
                 // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                return json["summary"]
+                console.log(json);
+                return json
             })
+
+
+
+        setSummary(summary_["abs_summ"]);
+        
+        
+        setSignificantWords(summary_["significant_words"]);
+        // setSummaryToDisplay(summary_["summary"]);
+        setSummaryToDisplayArray(summary_["summary"].split(''));
+        
+
+        
+        // setSummaryAbsToDisplayArray(summary_abs["abs_summ"].split(''));
         setSummaryAbs(summary_abs["abs_summ"]);
 
-        console.log("\n\n\n\nHEREEEE");
-        console.log(summary_abs);
+        // console.log(summary_["summary"].split(''));
+
+        // post summary
+        // await fetch(
+        //     "http://127.0.0.1:5000/summary",
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+
+        //             "summary": summary_,
+        //             "compression_ratio": sizesToSendToApi[rangeValue],
+        //             "text_id": text_id
+        //         })
+        //     }
+        // )
+
 
 
     }
@@ -318,7 +318,7 @@ const Index = () => {
                             <div className='pt-2'>
                                 <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                     placeholder='Significant words will appear here ...'
-                                    value={(summary === "" || text == "") ? "" : `${summary["significant_words"].join(", ")}`}
+                                    value={(summary === "" || text == "") ? "" : `${significantWords.join(", ")}`}
                                     // disabled
                                     rows="2"
                                     cols="50"
@@ -332,23 +332,19 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="row">
-                        {((summary === "" || text == "") && summaryAbs === "") ? <></> : <div class="spinner-border text-light" role="status">
-                            <span class="sr-only"></span>
-                        </div>}
-                        <div className="input-group input-group-lg rounded border border-4 border-success border-2">
-                            <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary... Hang on a second."}
-                                value={(summary === "" || text == "") ? "" : summaryAbs}
-                                // disabled
-                                rows="12"
-                                cols="50"
+                    <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
+                                    value={(summary === "" || text == "") ? "" : summaryAbs}
+                                    // disabled
+                                    rows="12"
+                                    cols="50"
 
-                                onChange={(e) => {
-                                    // TODO
-                                }}
-                            />
-                        </div>
-                        {summaryAbs}
+                                    onChange={(e) => {
+                                        // TODO
+                                    }}
+                                />
+                            </div>
                     </div>
                 </div>
             </div>
@@ -366,3 +362,4 @@ export default Index;
 // Mahashivaratri is an important festival that is widely celebrated in both Nepal and India, though with different perspectives and processes. Some fast for the entire day of Mahashivaratri and perform vedic or tantric worship of Shiva, while others practise meditative yoga. People also perform the Rudra Abhishek in the day of Mahashivaratri, a special type of puja to please Lord Shiva and seek his blessings. The rituals are carried out throughout the day or in different muhurtas (ancient measurement units for time). Though the daytime of the Mahashivaratri rituals differ, at night people generally stay awake doing bhajan, kirtans, meditation, sadhana, upasana, etc.
 
 // Mahashivaratri is a magnificent occasion for the followers of Lord Shiva to praise him and seek his blessings. In fact, for devotees of Lord Shiva, nothing is more important than fasting on this day,” said Narayan Bhatt, a priest at Pashupatinath Temple. A common ritual a lot of people follow is to take a bath in a river early in the morning or in warm water with sesame seeds at their homes in order to clean themselves. “Devotees can fast for 24 hours in the day of Mahashivaratri without eating or drinking, but they can also fast by drinking water and eating sattvic food (unprocessed food with yogic qualities to increase energy),” added the priest.
+
