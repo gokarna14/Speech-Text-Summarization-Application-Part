@@ -390,8 +390,10 @@ const Index = () => {
                         </div>
                         <div className="col">
                             <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                placeholder={(summary === "" || text == "") ? 'Recommended heading will appear here ...' : "Identifying the best heading for your text ... hang on !!"}
-                                value={(summary === "" || text == "") ? "" : heading}
+
+                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
+                                value={(summary === "" || text == "") ? "" : summaryAbs.split("...")[0]}
+
                                 // disabled
                                 rows="5"
                                 cols="50"
