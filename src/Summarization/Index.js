@@ -12,6 +12,7 @@ const Index = () => {
 
 
     const [text, setText] = useState('')
+    const [heading, setHeading] = useState('')
     const [count, setCount] = useState(0)
     const [summaryToDisplay, setSummaryToDisplay] = useState('')
     const [summaryToDisplayArray, setSummaryToDisplayArray] = useState('')
@@ -195,8 +196,28 @@ const Index = () => {
 
         setSummaryAbs(summary_abs["summary"]["abs_summ"]);
 
+        let heading = await fetch(
+            "http://127.0.0.1:5000/generateHeading",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "text": text,
+                    "compression_ratio": sizesToSendToApi[rangeValue]
+                })
+            }
+        )
+            .then(response => response.json())
+            .then(json => {
+                // setTextId(json["MAX(text_id)"]);
+                // new Promise(()=>setTextId(json["MAX(text_id)"]))
+                console.log(json);
+                return json
+            })
 
-
+        setHeading(heading["heading"]);
 
     }
 
@@ -208,6 +229,14 @@ const Index = () => {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'The input text is too short to summarize!!! Try again with longer length (> 50 words)',
+                // footer: '<a href="">Why do I have this issue?</a>'
+            })
+        }
+        if (text.split(" ").length > 5000) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'The input text is too long to summarize!!! Try again with shorter length (> 50 words)',
                 // footer: '<a href="">Why do I have this issue?</a>'
             })
         }
@@ -298,6 +327,7 @@ const Index = () => {
                                             setSummary("");
                                             setSummaryAbs("");
                                             setSummaryToDisplay("");
+                                            setHeading("");
                                         }} />
                                         {/* {rangeValue} */}
                                     </span>
@@ -337,19 +367,35 @@ const Index = () => {
                         </div>
                     </div>
                     <div className="row">
-                        {((summary === "" || text === "") && summaryAbs === "") ? "" : (summaryAbs === "") ? <>
-                            <div class="spinner-border text-light" role="status">
-                                <span class="sr-only"></span>
+                        <div className="col">
+                            {((summary === "" || text === "") && summaryAbs === "") ? "" : (summaryAbs === "") ? <>
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </> : ""
+                            }
+                            <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                                <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                    placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
+                                    value={(summary === "" || text == "") ? "" : summaryAbs}
+                                    // disabled
+                                    rows="12"
+                                    cols="50"
+
+                                    onChange={(e) => {
+                                        // TODO
+                                    }}
+                                />
                             </div>
-                        </> : ""
-                        }
-                        <div className="input-group input-group-lg rounded border border-4 border-success border-2">
+                        </div>
+                        <div className="col">
                             <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
-                                value={(summary === "" || text == "") ? "" : summaryAbs}
+                                placeholder={(summary === "" || text == "") ? 'Recommended heading will appear here ...' : "Identifying the best heading for your text ... hang on !!"}
+                                value={(summary === "" || text == "") ? "" : heading}
                                 // disabled
-                                rows="12"
+                                rows="5"
                                 cols="50"
+                                // value={"Your text to summarize here ... "}
 
                                 onChange={(e) => {
                                     // TODO
