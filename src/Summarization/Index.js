@@ -346,7 +346,7 @@ const Index = () => {
                         <div className="input-group input-group-lg rounded border border-4 border-success border-2">
                             <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                 placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
-                                value={(summary === "" || text == "") ? "" : summaryAbs}
+                                value={(summary === "" || text == "") ? "" : summaryAbs.split("...")[0]}
                                 // disabled
                                 rows="12"
                                 cols="50"
