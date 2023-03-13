@@ -40,7 +40,7 @@ const Index = () => {
                 setSummaryToDisplay(`${summaryToDisplay}${summaryToDisplayArray[count]}`);
                 setCount(count + 1);
             }
-        }, 20);
+        }, 40);
         return () => clearInterval(interval);
     }, [text, summary, summaryToDisplay, summaryToDisplayArray]);
 
@@ -173,6 +173,30 @@ const Index = () => {
         //     }
         // )
 
+        let heading_ = await fetch(
+            "http://127.0.0.1:5000/generateHeading",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "text": text,
+                    "compression_ratio": sizesToSendToApi[rangeValue]
+                })
+            }
+        )
+            .then(response => response.json())
+            .then(json => {
+                // setTextId(json["MAX(text_id)"]);
+                // new Promise(()=>setTextId(json["MAX(text_id)"]))
+                // console.log('\n \n\n \n \n jadu')
+                console.log(json);
+                return json
+            })
+        
+        setHeading(heading_["heading"]);
+
         let summary_abs = await fetch(
             "http://127.0.0.1:5000/generateAbs_summary",
             {
@@ -196,33 +220,14 @@ const Index = () => {
 
         setSummaryAbs(summary_abs["summary"]["abs_summ"]);
 
-        let heading = await fetch(
-            "http://127.0.0.1:5000/generateHeading",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "text": text,
-                    "compression_ratio": sizesToSendToApi[rangeValue]
-                })
-            }
-        )
-            .then(response => response.json())
-            .then(json => {
-                // setTextId(json["MAX(text_id)"]);
-                // new Promise(()=>setTextId(json["MAX(text_id)"]))
-                console.log(json);
-                return json
-            })
-
-        setHeading(heading["heading"]);
+        
 
     }
 
     const summarizationClicked = async () => {
         // console.log(text);
+
+        setSummaryAbs("")
 
         if (text.split(" ").length < 50) {
             Swal.fire({
@@ -351,6 +356,7 @@ const Index = () => {
                                 <br />
                             </div>
                             <div className='pt-2'>
+                                <h3>Significant Words</h3>
                                 <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                                     placeholder='Significant words will appear here ...'
                                     value={(summary === "" || text == "") ? "" : `${significantWords.join(", ")}`}
@@ -389,11 +395,10 @@ const Index = () => {
                             </div>
                         </div>
                         <div className="col">
+                            <h3>Recommended Heading</h3>
                             <textarea type="text" className="form-control bg-dark text-light font-monospace" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-
-                                placeholder={(summary === "" || text == "") ? 'Your abstractive summary will appear here ...' : "Loading your abstractive summary hang on !!"}
-                                value={(summary === "" || text == "") ? "" : summaryAbs.split("...")[0]}
-
+                                placeholder={(summary === "" || text == "") ? 'Recommended heading will appear here ...' : "Identifying the best heading for your text ... hang on !!"}
+                                value={(summary === "" || text == "") ? "" : heading}
                                 // disabled
                                 rows="5"
                                 cols="50"
@@ -421,4 +426,3 @@ export default Index;
 // Mahashivaratri is an important festival that is widely celebrated in both Nepal and India, though with different perspectives and processes. Some fast for the entire day of Mahashivaratri and perform vedic or tantric worship of Shiva, while others practise meditative yoga. People also perform the Rudra Abhishek in the day of Mahashivaratri, a special type of puja to please Lord Shiva and seek his blessings. The rituals are carried out throughout the day or in different muhurtas (ancient measurement units for time). Though the daytime of the Mahashivaratri rituals differ, at night people generally stay awake doing bhajan, kirtans, meditation, sadhana, upasana, etc.
 
 // Mahashivaratri is a magnificent occasion for the followers of Lord Shiva to praise him and seek his blessings. In fact, for devotees of Lord Shiva, nothing is more important than fasting on this day,” said Narayan Bhatt, a priest at Pashupatinath Temple. A common ritual a lot of people follow is to take a bath in a river early in the morning or in warm water with sesame seeds at their homes in order to clean themselves. “Devotees can fast for 24 hours in the day of Mahashivaratri without eating or drinking, but they can also fast by drinking water and eating sattvic food (unprocessed food with yogic qualities to increase energy),” added the priest.
-
